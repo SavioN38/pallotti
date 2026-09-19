@@ -58,7 +58,8 @@ export const GALLERY_TOTAL_CATEGORIES = 28;
 function gallerySrc(categoryName: string, fileName: string): string {
   const folder = encodeURI(categoryName).replace(/#/g, '%23');
   const file = encodeURI(fileName).replace(/#/g, '%23');
-  return `/images/gallery/${folder}/${file}`;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return `${base}/images/gallery/${folder}/${file}`;
 }
 
 export function buildGalleryCategories(year: string): GalleryCategory[] {

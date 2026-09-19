@@ -52,25 +52,25 @@ const stats = [
 
 const campusLifeCards = [
   {
-    img: '/images/classrooms_that_spark_curiosity.jpeg',
+    img: 'images/classrooms_that_spark_curiosity.jpeg',
     alt: 'Classrooms that spark curiosity',
     tag: 'Academics',
     title: 'Classrooms that spark curiosity',
   },
   {
-    img: '/images/athletics_and_teamwork.jpeg',
+    img: 'images/athletics_and_teamwork.jpeg',
     alt: 'Athletics & teamwork',
     tag: 'Sport',
     title: 'Athletics & teamwork',
   },
   {
-    img: '/images/creative_expression.jpg',
+    img: 'images/creative_expression.jpg',
     alt: 'Creative expression',
     tag: 'Arts',
     title: 'Creative expression',
   },
   {
-    img: '/images/learning_for_tomorrow.jpg',
+    img: 'images/learning_for_tomorrow.jpg',
     alt: 'Learning for tomorrow',
     tag: 'Technology',
     title: 'Learning for tomorrow',
@@ -119,7 +119,7 @@ export function HomePage() {
       <main id="top">
         <section className="relative isolate flex min-h-[88vh] items-end overflow-hidden bg-[#173c46] pb-16 pt-28 sm:min-h-[100vh] sm:pb-20 sm:pt-32 lg:pb-28">
           <img
-            src="/images/school/school.png"
+            src="images/school/school.png"
             alt="Pallotti Hill Public School campus"
             className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
             fetchPriority="high"
@@ -257,7 +257,7 @@ export function HomePage() {
             <Reveal direction="right">
               <div className="relative overflow-hidden rounded-sm">
                 <img
-                  src="/images/school/school_no_sky.png"
+                  src="images/school/school_no_sky.png"
                   alt="The Pallotti Hill school building"
                   className="h-[300px] w-full object-cover object-center transition-transform duration-700 hover:scale-105 lg:h-[540px] sm:h-[400px]"
                   loading="lazy"
@@ -331,7 +331,7 @@ export function HomePage() {
               <Reveal direction="right">
                 <div className="relative mx-auto max-w-[340px] overflow-hidden rounded-lg border-8 border-[#173c46] shadow-2xl shadow-[#173c46]/20">
                   <img
-                    src="/images/st_vincent_pallotti.jpg"
+                    src="images/st_vincent_pallotti.jpg"
                     alt="St. Vincent Pallotti - Founder & Inspiration"
                     className="h-auto w-full object-cover"
                   />
@@ -402,7 +402,7 @@ export function HomePage() {
                 </div>
                 <div className="relative overflow-hidden rounded-b-lg">
                   <img
-                    src="/images/meet_team.jpeg"
+                    src="images/meet_team.jpeg"
                     alt="Pallotti Hill Public School Teachers and Staff Team"
                     className="w-full object-cover rounded-lg shadow-inner"
                     loading="lazy"
@@ -416,7 +416,7 @@ export function HomePage() {
         {/* Alumni Speak Section */}
         <section className="relative overflow-hidden bg-[#173c46] px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-10 lg:py-28 border-b-8 border-[#f6f5f0]">
           <img
-            src="/images/alumni_speak_bg.jpg"
+            src="images/alumni_speak_bg.jpg"
             alt=""
             className="absolute inset-0 h-full w-full object-cover opacity-25"
             loading="lazy"

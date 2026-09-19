@@ -8,7 +8,7 @@ export function AppFooter() {
         <div className="sm:col-span-2">
           <Link to="/" className="group flex items-center gap-3">
             <img
-              src="/images/school/logo.png"
+              src="images/school/logo.png"
               alt="Pallotti Hill Public School logo"
               className="h-10 w-10 rounded-full bg-white object-contain shadow-md transition-transform duration-500 group-hover:rotate-[360deg]"
             />
