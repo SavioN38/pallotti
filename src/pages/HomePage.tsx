@@ -239,6 +239,7 @@ export function HomePage() {
                       alt={card.alt}
                       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                       loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#173c46]/90 via-[#173c46]/20 to-transparent transition-opacity duration-500 group-hover:from-[#173c46]/95" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
