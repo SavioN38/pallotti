@@ -363,13 +363,16 @@ export function GalleryPage() {
                                 setLightboxAutoStart(false);
                                 setLightboxIndex(photo.globalIndex);
                               }}
-                              className="group relative block w-full overflow-hidden rounded-sm bg-[#173c46]/5"
+                              className="group relative block aspect-[4/3] w-full overflow-hidden rounded-sm bg-[#173c46]/10"
                             >
                               <img
                                 src={photo.src}
                                 alt={`${photo.category} photo`}
+                                width={800}
+                                height={600}
                                 loading="lazy"
-                                className="h-auto w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.04]"
+                                decoding="async"
+                                className="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.04]"
                               />
                               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d242b]/60 via-transparent to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
                               <div className="pointer-events-none absolute bottom-3 left-3 right-3 flex items-center justify-between text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 translate-y-2">
