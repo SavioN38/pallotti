@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 
 const data = JSON.parse(fs.readFileSync('gallery_scanned.json', 'utf8'));
 
@@ -19,7 +18,7 @@ export interface GalleryCategory {
 export const GALLERY_YEARS = [
   { slug: '2025-26', label: '2025 — 2026', active: true },
   { slug: '2024-25', label: '2024 — 2025', active: true },
-  { slug: '2023-24', label: '2023 — 2024', active: false },
+  { slug: '2023-24', label: '2023 — 2024', active: true },
   { slug: '2022-23', label: '2022 — 2023', active: false },
   { slug: '2021-22', label: '2021 — 2022', active: false },
   { slug: '2020-21', label: '2020 — 2021', active: false },
@@ -36,9 +35,9 @@ function gallerySrc(yearFolder: string, categoryName: string, fileName: string):
 const YEAR_DATA: Record<string, { folder: string; categories: { name: string; files: string[] }[] }> = {
 `;
 
-for (const year of ['2025-26', '2024-25']) {
+for (const year of ['2025-26', '2024-25', '2023-24']) {
   const yearFolder = `gallery-${year}`;
-  const cats = data[year];
+  const cats = data[year] || {};
   tsContent += `  '${year}': {\n    folder: '${yearFolder}',\n    categories: [\n`;
   for (const cat in cats) {
     const files = cats[cat];
@@ -65,18 +64,11 @@ export function buildGalleryCategories(year: string): GalleryCategory[] {
       name: c.name,
       slug,
       photos,
-      cover: photos[0]?.src || '',
+      cover: photos[0]?.src || "",
     };
   });
 }
-
-export function getAllPhotosForYear(year: string): GalleryPhoto[] {
-  const cats = buildGalleryCategories(year);
-  const all: GalleryPhoto[] = [];
-  cats.forEach((c) => c.photos.forEach((p) => all.push(p)));
-  return all;
-}
 `;
 
-fs.writeFileSync('src/data/gallery.ts', tsContent);
-console.log('Successfully regenerated src/data/gallery.ts with 2025-26 and 2024-25 data!');
+fs.writeFileSync('src/data/gallery.ts', tsContent, 'utf8');
+console.log('Successfully generated src/data/gallery.ts');
