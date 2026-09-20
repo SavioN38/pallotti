@@ -1038,7 +1038,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "WOLRD ENVIRONMENT DAY CELEBRATION...",
+        name: "WOLRD ENVIRONMENT DAY CELEBRATION",
         files: [
                   "346844812_271611845270187_1960216931932892800_n.jpg",
                   "352090990_166100869580647_8096148518633183481_n.jpg",
@@ -1165,7 +1165,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "LITERARY COMPETITION .....",
+        name: "LITERARY COMPETITION",
         files: [
                   "209dfaf2-4140-4baa-a047-a6cbd6d673ef.jpg",
                   "ae050e0a-9954-4314-b7a1-f4d24ff223d1.jpg",
@@ -1188,7 +1188,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Cartoon Creation...",
+        name: "Cartoon Creation",
         files: [
                   "357523174_695327649275270_3945290737363261788_n.jpg",
                   "357777646_695327619275273_2635107164595948718_n.jpg",
@@ -1201,19 +1201,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Power Point Presentation Competition.....",
-        files: [
-                  "361090122_697175269090508_563646910968353182_n.jpg",
-                  "361092198_697175242423844_8514841896882963329_n.jpg",
-                  "361223456_697175329090502_5300793746601294049_n.jpg",
-                  "359087611_697174829090552_4052908267129027064_n.jpg",
-                  "361095946_697174852423883_2646226775591569721_n.jpg",
-                  "359710078_697174749090560_627979597578345539_n.jpg",
-                  "361191692_697175002423868_827707625816160360_n.jpg"
-        ],
-      },
-      {
-        name: "Poster Designing Competition..",
+        name: "Poster Designing Competition",
         files: [
                   "359186921_697177049090330_1465088843937104548_n.jpg",
                   "361094330_697176855757016_4299296954135319412_n.jpg",
@@ -1238,7 +1226,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Quiz Competition during assembly in connection with moon day..",
+        name: "Quiz Competition during assembly in connection with moon day",
         files: [
                   "362258403_701631258644909_7396103297655386404_n.jpg",
                   "362265241_701631381978230_2881688042812888809_n.jpg",
@@ -1248,7 +1236,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "PTA Executive meeting...",
+        name: "PTA Executive meeting",
         files: [
                   "364175769_706548508153184_4950208217528753509_n.jpg",
                   "364218554_706548611486507_2899514689857009230_n.jpg",
@@ -1262,7 +1250,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Investiture Ceremony 2023-24....",
+        name: "Investiture Ceremony 2023-24",
         files: [
                   "364742692_708806754594026_6557687833961043881_n.jpg",
                   "364692620_708806674594034_3304642195733049498_n.jpg",
@@ -1293,7 +1281,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Vegetable Day celebration at Pallotti Kids World..",
+        name: "Vegetable Day celebration at Pallotti Kids World",
         files: [
                   "363431365_709792387828796_8146170433025927879_n.jpg",
                   "363408324_709792321162136_1238956159938116953_n.jpg",
@@ -1401,7 +1389,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Onam Celebration...",
+        name: "Onam Celebration",
         files: [
                   "WhatsApp-Image-2023-09-05-at-11.23.28-AM-3.jpeg",
                   "WhatsApp-Image-2023-09-05-at-11.23.28-AM-1.jpeg",
@@ -1522,7 +1510,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Result Day of Grade KG to Grade 5.",
+        name: "Result Day of Grade KG to Grade 5",
         files: [
                   "393296805_760093772798657_5063625959040537845_n.jpg",
                   "393314166_760093699465331_7844034244350344854_n.jpg",
@@ -1533,7 +1521,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Class picnic of Grade 1,2,3 to Flora Fantasia Amusement Park..",
+        name: "Class picnic of Grade 1,2,3 to Flora Fantasia Amusement Park",
         files: [
                   "395383804_763934825747885_4668948462239400381_n.jpg",
                   "395277999_763934632414571_3356438943777697813_n.jpg",
@@ -1585,7 +1573,7 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
         ],
       },
       {
-        name: "Result Day of Grade 6 to 10.",
+        name: "Result Day of Grade 6 to 10",
         files: [
                   "396341555_768793295262038_3425974278531147398_n.jpg",
                   "398452752_768793301928704_6364741730909206437_n.jpg",
@@ -1878,6 +1866,18 @@ const YEAR_DATA: Record<string, { folder: string; categories: { name: string; fi
                   "429815428_841277328013634_8346643029125985096_n.jpg"
         ],
       },
+      {
+        name: "Power Point Presentation Competition",
+        files: [
+                  "361090122_697175269090508_563646910968353182_n.jpg",
+                  "361092198_697175242423844_8514841896882963329_n.jpg",
+                  "361223456_697175329090502_5300793746601294049_n.jpg",
+                  "359087611_697174829090552_4052908267129027064_n.jpg",
+                  "361095946_697174852423883_2646226775591569721_n.jpg",
+                  "359710078_697174749090560_627979597578345539_n.jpg",
+                  "361191692_697175002423868_827707625816160360_n.jpg"
+        ],
+      },
     ],
   },
 };
@@ -1901,4 +1901,8 @@ export function buildGalleryCategories(year: string): GalleryCategory[] {
       cover: photos[0]?.src || "",
     };
   });
+}
+
+export function getAllPhotosForYear(year: string): GalleryPhoto[] {
+  return buildGalleryCategories(year).flatMap((c) => c.photos);
 }

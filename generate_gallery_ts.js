@@ -68,6 +68,10 @@ export function buildGalleryCategories(year: string): GalleryCategory[] {
     };
   });
 }
+
+export function getAllPhotosForYear(year: string): GalleryPhoto[] {
+  return buildGalleryCategories(year).flatMap((c) => c.photos);
+}
 `;
 
 fs.writeFileSync('src/data/gallery.ts', tsContent, 'utf8');
