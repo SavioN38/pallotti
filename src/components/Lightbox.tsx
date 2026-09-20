@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Images, Play, Pause, Download, Check } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Images, Play, Pause } from 'lucide-react';
 import { GalleryPhoto } from '@/data/gallery';
 
 type LightboxProps = {
@@ -16,8 +16,6 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
   const [playing, setPlaying] = useState(startPlaying);
   const [currentPhoto, setCurrentPhoto] = useState(photos[index]);
   const [fade, setFade] = useState(true);
-  const [downloading, setDownloading] = useState(false);
-  const [downloaded, setDownloaded] = useState(false);
   const total = photos.length;
 
   useEffect(() => {
@@ -29,46 +27,9 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
     const timer = setTimeout(() => {
       setCurrentPhoto(photos[index]);
       setFade(true);
-      setDownloaded(false);
     }, 150);
     return () => clearTimeout(timer);
   }, [index, photos]);
-
-  const handleDownload = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!currentPhoto || downloading) return;
-    try {
-      setDownloading(true);
-      const response = await fetch(currentPhoto.src);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const cleanCat = (currentPhoto.category || 'pallotti-photo').replace(/[^a-zA-Z0-9_-]/g, '_');
-      const filename = `Pallotti_${cleanCat}_${index + 1}.jpg`;
-      
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
-
-      setDownloaded(true);
-      setTimeout(() => setDownloaded(false), 2000);
-    } catch {
-      // Fallback direct open/download
-      const a = document.createElement('a');
-      a.href = currentPhoto.src;
-      a.download = `Pallotti_Photo_${index + 1}.jpg`;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } finally {
-      setDownloading(false);
-    }
-  };
 
   const goPrev = useCallback(() => {
     if (index > 0) {
@@ -129,40 +90,13 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
       aria-modal="true"
       aria-label="Photo lightbox"
     >
-      {/* TOP ACTIONS */}
-      <div className="absolute right-5 top-5 z-10 flex items-center gap-2.5">
-        <button
-          onClick={handleDownload}
-          disabled={downloading}
-          className={`flex h-11 items-center gap-2 rounded-full border px-4 text-[12px] font-semibold tracking-wide backdrop-blur transition-all ${
-            downloaded
-              ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-300'
-              : 'border-white/15 bg-white/5 text-white/85 hover:bg-white/15 hover:text-white'
-          }`}
-          aria-label="Download photo"
-          title="Download original photo"
-        >
-          {downloaded ? (
-            <>
-              <Check size={16} className="text-emerald-400" />
-              <span className="hidden sm:inline">Downloaded</span>
-            </>
-          ) : (
-            <>
-              <Download size={16} className={downloading ? 'animate-bounce' : ''} />
-              <span className="hidden sm:inline">{downloading ? 'Downloading...' : 'Download'}</span>
-            </>
-          )}
-        </button>
-
-        <button
-          onClick={onClose}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-all hover:bg-white/10 hover:text-white"
-          aria-label="Close lightbox"
-        >
-          <X size={20} />
-        </button>
-      </div>
+      <button
+        onClick={onClose}
+        className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-all hover:bg-white/10 hover:text-white"
+        aria-label="Close lightbox"
+      >
+        <X size={20} />
+      </button>
 
       <div
         className="absolute left-5 top-5 z-10 flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/85 backdrop-blur"

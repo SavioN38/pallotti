@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   ArrowRight,
   CircleArrowOutUpRight,
@@ -111,8 +111,42 @@ const testimonials = [
   },
 ];
 
+const HERO_START_POINTS = [6, 14, 31, 57, 90]; // 00:06, 00:14, 00:31, 00:57, 1:30
+
 export function HomePage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [videoReady, setVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleLoadedMetadata = () => {
+      const chosenPoint = HERO_START_POINTS[Math.floor(Math.random() * HERO_START_POINTS.length)];
+      video.currentTime = chosenPoint;
+      video.play().catch(() => {});
+    };
+
+    const handleSeekedOrCanPlay = () => {
+      setVideoReady(true);
+    };
+
+    if (video.readyState >= 1) {
+      handleLoadedMetadata();
+    } else {
+      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    }
+
+    video.addEventListener('seeked', handleSeekedOrCanPlay);
+    video.addEventListener('playing', handleSeekedOrCanPlay);
+
+    return () => {
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('seeked', handleSeekedOrCanPlay);
+      video.removeEventListener('playing', handleSeekedOrCanPlay);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#f6f5f0] text-[#173c46]">
@@ -120,12 +154,28 @@ export function HomePage() {
 
       <main id="top">
         <section className="relative isolate flex min-h-[88vh] items-end overflow-hidden bg-[#173c46] pb-16 pt-28 sm:min-h-[100vh] sm:pb-20 sm:pt-32 lg:pb-28">
+          {/* POSTER FALLBACK / INITIAL LOAD */}
           <img
             src={`${base}/images/school/school.png`}
             alt="Pallotti Hill Public School campus"
-            className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
+            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-1000 ${
+              videoReady ? 'opacity-0' : 'opacity-100'
+            }`}
             fetchPriority="high"
-            style={{ animation: 'kenBurns 22s ease-in-out infinite alternate' }}
+          />
+
+          {/* HERO BACKGROUND VIDEO */}
+          <video
+            ref={videoRef}
+            src={`${base}/videos/campus_hero.mp4`}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-1000 ${
+              videoReady ? 'opacity-100' : 'opacity-0'
+            }`}
           />
           <div className="absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(13,43,51,.88)_0%,rgba(19,58,67,.6)_43%,rgba(19,58,67,.08)_100%)]" />
           <div className="absolute inset-0 -z-[4] bg-[linear-gradient(0deg,rgba(10,35,42,.7)_0%,transparent_55%)]" />
