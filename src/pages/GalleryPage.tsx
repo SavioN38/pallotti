@@ -7,10 +7,8 @@ import { Lightbox } from '@/components/Lightbox';
 import { Reveal } from '@/components/Reveal';
 import {
   GALLERY_YEARS,
-  GALLERY_TOTAL_CATEGORIES,
-  GALLERY_TOTAL_PHOTOS,
-  CATEGORIES_2025_26,
-  ALL_PHOTOS_2025_26,
+  buildGalleryCategories,
+  getAllPhotosForYear,
   GalleryCategory,
 } from '@/data/gallery';
 
@@ -35,13 +33,11 @@ export function GalleryPage() {
   const isActiveYear = yearInfo?.active;
 
   const categories: GalleryCategory[] = useMemo(() => {
-    if (yearSlug === '2025-26') return CATEGORIES_2025_26;
-    return [];
+    return buildGalleryCategories(yearSlug);
   }, [yearSlug]);
 
   const allPhotos = useMemo(() => {
-    if (yearSlug === '2025-26') return ALL_PHOTOS_2025_26;
-    return [];
+    return getAllPhotosForYear(yearSlug);
   }, [yearSlug]);
 
   useEffect(() => {
@@ -173,7 +169,7 @@ export function GalleryPage() {
                 <Layers size={10} className="sm:size-[11px]" /> Categories
               </div>
               <div className="mt-2 font-serif leading-none text-white text-[28px] sm:text-[40px]">
-                {GALLERY_TOTAL_CATEGORIES}<span className="text-[#f2d48e] ml-0.5 text-[16px] sm:text-[22px]">+</span>
+                {categories.length}<span className="text-[#f2d48e] ml-0.5 text-[16px] sm:text-[22px]">+</span>
               </div>
               <p className="mt-2 text-[10px] text-white/40 sm:text-[11px]">Events & celebrations</p>
             </div>
@@ -182,7 +178,7 @@ export function GalleryPage() {
                 <Images size={10} className="sm:size-[11px]" /> Photographs
               </div>
               <div className="mt-2 font-serif leading-none text-white text-[28px] sm:text-[40px]">
-                {GALLERY_TOTAL_PHOTOS}
+                {allPhotos.length}
               </div>
               <p className="mt-2 text-[10px] text-white/40 sm:text-[11px]">Curated memories</p>
             </div>
@@ -191,10 +187,10 @@ export function GalleryPage() {
                 <Clock size={10} className="sm:size-[11px]" /> Status
               </div>
               <div className="mt-2 font-serif leading-none text-white text-[22px] sm:text-[28px]">
-                <span className="mr-1 inline-block h-1.5 w-1.5 translate-y-[-5px] animate-pulse rounded-full bg-[#86c67a] sm:mr-2 sm:h-2 sm:w-2 sm:translate-y-[-6px]" />
-                <span className="text-white">In progress</span>
+                <span className="mr-1.5 inline-block h-2 w-2 translate-y-[-5px] rounded-full bg-[#86c67a] shadow-[0_0_8px_rgba(134,198,122,0.8)] sm:mr-2 sm:h-2.5 sm:w-2.5 sm:translate-y-[-6px]" />
+                <span className="text-white">Completed</span>
               </div>
-              <p className="mt-2 text-[10px] text-white/40 sm:text-[11px]">Growing every term</p>
+              <p className="mt-2 text-[10px] text-white/40 sm:text-[11px]">Academic year archive</p>
             </div>
           </div>
         </div>

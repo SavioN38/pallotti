@@ -1,5 +1,5 @@
-import { useEffect, useCallback, useState, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Images, Play, Pause } from 'lucide-react';
+import { useEffect, useCallback, useState } from 'react';
+import { X, ChevronLeft, ChevronRight, Images, Play, Pause, Download, Check } from 'lucide-react';
 import { GalleryPhoto } from '@/data/gallery';
 
 type LightboxProps = {
@@ -16,6 +16,8 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
   const [playing, setPlaying] = useState(startPlaying);
   const [currentPhoto, setCurrentPhoto] = useState(photos[index]);
   const [fade, setFade] = useState(true);
+  const [downloading, setDownloading] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
   const total = photos.length;
 
   useEffect(() => {
@@ -27,9 +29,46 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
     const timer = setTimeout(() => {
       setCurrentPhoto(photos[index]);
       setFade(true);
+      setDownloaded(false);
     }, 150);
     return () => clearTimeout(timer);
   }, [index, photos]);
+
+  const handleDownload = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!currentPhoto || downloading) return;
+    try {
+      setDownloading(true);
+      const response = await fetch(currentPhoto.src);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const cleanCat = (currentPhoto.category || 'pallotti-photo').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const filename = `Pallotti_${cleanCat}_${index + 1}.jpg`;
+      
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+
+      setDownloaded(true);
+      setTimeout(() => setDownloaded(false), 2000);
+    } catch {
+      // Fallback direct open/download
+      const a = document.createElement('a');
+      a.href = currentPhoto.src;
+      a.download = `Pallotti_Photo_${index + 1}.jpg`;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const goPrev = useCallback(() => {
     if (index > 0) {
@@ -90,13 +129,40 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
       aria-modal="true"
       aria-label="Photo lightbox"
     >
-      <button
-        onClick={onClose}
-        className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-all hover:bg-white/10 hover:text-white"
-        aria-label="Close lightbox"
-      >
-        <X size={20} />
-      </button>
+      {/* TOP ACTIONS */}
+      <div className="absolute right-5 top-5 z-10 flex items-center gap-2.5">
+        <button
+          onClick={handleDownload}
+          disabled={downloading}
+          className={`flex h-11 items-center gap-2 rounded-full border px-4 text-[12px] font-semibold tracking-wide backdrop-blur transition-all ${
+            downloaded
+              ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-300'
+              : 'border-white/15 bg-white/5 text-white/85 hover:bg-white/15 hover:text-white'
+          }`}
+          aria-label="Download photo"
+          title="Download original photo"
+        >
+          {downloaded ? (
+            <>
+              <Check size={16} className="text-emerald-400" />
+              <span className="hidden sm:inline">Downloaded</span>
+            </>
+          ) : (
+            <>
+              <Download size={16} className={downloading ? 'animate-bounce' : ''} />
+              <span className="hidden sm:inline">{downloading ? 'Downloading...' : 'Download'}</span>
+            </>
+          )}
+        </button>
+
+        <button
+          onClick={onClose}
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-all hover:bg-white/10 hover:text-white"
+          aria-label="Close lightbox"
+        >
+          <X size={20} />
+        </button>
+      </div>
 
       <div
         className="absolute left-5 top-5 z-10 flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/85 backdrop-blur"
@@ -123,19 +189,6 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
           </div>
         )}
       </div>
-
-      <button
-        onClick={(e) => { e.stopPropagation(); setPlaying(p => !p); }}
-        className={`absolute left-5 top-1/2 z-10 hidden h-12 w-12 -translate-y-[120px] items-center justify-center rounded-full border transition-all hover:scale-105 hover:text-white sm:flex ${
-          playing
-            ? 'border-[#d7b76d]/40 bg-[#d7b76d]/15 text-[#f2d48e] hover:bg-[#d7b76d]/25'
-            : 'border-white/15 bg-white/5 text-white/80 hover:bg-white/10'
-        }`}
-        aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
-        title={playing ? 'Pause slideshow (Space)' : 'Play slideshow (Space)'}
-      >
-        {playing ? <Pause size={18} /> : <Play size={18} className="translate-x-[1px]" />}
-      </button>
 
       <button
         onClick={(e) => { e.stopPropagation(); goPrev(); }}
@@ -165,19 +218,20 @@ export function Lightbox({ photos, index, onClose, onNavigate, startPlaying = fa
         />
       </div>
 
-      <div className="pointer-events-none absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/40 px-4 py-2 backdrop-blur">
+      {/* CENTERED BOTTOM PLAY / PAUSE BUTTON */}
+      <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2">
         <button
           onClick={(e) => { e.stopPropagation(); setPlaying(p => !p); }}
-          className="pointer-events-auto mr-1 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+          className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-xl backdrop-blur transition-all duration-300 hover:scale-110 hover:text-white sm:h-14 sm:w-14 ${
+            playing
+              ? 'border-[#d7b76d]/50 bg-[#d7b76d]/20 text-[#f2d48e] hover:bg-[#d7b76d]/30 shadow-[#d7b76d]/20'
+              : 'border-white/20 bg-black/60 text-white/90 hover:bg-black/80 hover:border-white/40'
+          }`}
           aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
+          title={playing ? 'Pause slideshow (Space)' : 'Play slideshow (Space)'}
         >
-          {playing ? <Pause size={12} /> : <Play size={12} className="translate-x-[0.5px]" />}
-          <span>{playing ? 'Pause' : 'Play'} slideshow</span>
+          {playing ? <Pause size={20} /> : <Play size={20} className="translate-x-[1.5px]" />}
         </button>
-        <span className="h-3 w-px bg-white/15" />
-        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">
-          ← → &nbsp;Navigate&nbsp;&nbsp;·&nbsp;&nbsp;Space&nbsp;&nbsp;Play/Pause&nbsp;&nbsp;·&nbsp;&nbsp;Esc&nbsp;&nbsp;Close
-        </span>
       </div>
     </div>
   );

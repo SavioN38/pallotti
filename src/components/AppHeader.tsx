@@ -78,7 +78,7 @@ export function AppHeader() {
       <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-6 lg:px-10">
         <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label="Pallotti Hill Public School home">
           <img
-            src="images/school/logo.png"
+            src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/school/logo.png`}
             alt="Pallotti Hill Public School logo"
             className="h-11 w-11 rounded-full bg-white object-contain shadow-md transition-transform duration-500 group-hover:rotate-[360deg]"
           />
