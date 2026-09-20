@@ -122,29 +122,46 @@ export function HomePage() {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleLoadedMetadata = () => {
+    let hasSeeked = false;
+
+    const setRandomStartTime = () => {
+      if (hasSeeked) return;
+      hasSeeked = true;
       const chosenPoint = HERO_START_POINTS[Math.floor(Math.random() * HERO_START_POINTS.length)];
-      video.currentTime = chosenPoint;
+      try {
+        video.currentTime = chosenPoint;
+      } catch {
+        // ignore if not ready
+      }
       video.play().catch(() => {});
     };
 
-    const handleSeekedOrCanPlay = () => {
+    const showVideo = () => {
       setVideoReady(true);
     };
 
     if (video.readyState >= 1) {
-      handleLoadedMetadata();
+      setRandomStartTime();
     } else {
-      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      video.addEventListener('loadedmetadata', setRandomStartTime);
     }
 
-    video.addEventListener('seeked', handleSeekedOrCanPlay);
-    video.addEventListener('playing', handleSeekedOrCanPlay);
+    video.addEventListener('canplay', showVideo);
+    video.addEventListener('playing', showVideo);
+    video.addEventListener('timeupdate', showVideo);
+
+    // Safety fallback: if event takes time, ensure video displays after 1s
+    const timeout = setTimeout(() => {
+      if (!hasSeeked) setRandomStartTime();
+      showVideo();
+    }, 1200);
 
     return () => {
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      video.removeEventListener('seeked', handleSeekedOrCanPlay);
-      video.removeEventListener('playing', handleSeekedOrCanPlay);
+      clearTimeout(timeout);
+      video.removeEventListener('loadedmetadata', setRandomStartTime);
+      video.removeEventListener('canplay', showVideo);
+      video.removeEventListener('playing', showVideo);
+      video.removeEventListener('timeupdate', showVideo);
     };
   }, []);
 
@@ -158,8 +175,8 @@ export function HomePage() {
           <img
             src={`${base}/images/school/school.png`}
             alt="Pallotti Hill Public School campus"
-            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-1000 ${
-              videoReady ? 'opacity-0' : 'opacity-100'
+            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-700 ${
+              videoReady ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
             fetchPriority="high"
           />
@@ -172,8 +189,8 @@ export function HomePage() {
             muted
             loop
             playsInline
-            preload="auto"
-            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-1000 ${
+            preload="metadata"
+            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-700 ${
               videoReady ? 'opacity-100' : 'opacity-0'
             }`}
           />
