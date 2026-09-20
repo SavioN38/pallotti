@@ -170,12 +170,12 @@ export function HomePage() {
       <AppHeader />
 
       <main id="top">
-        <section className="relative isolate flex min-h-[88vh] items-end overflow-hidden bg-[#173c46] pb-16 pt-28 sm:min-h-[100vh] sm:pb-20 sm:pt-32 lg:pb-28">
+        <section className="relative isolate flex min-h-[88vh] items-end overflow-hidden pb-16 pt-28 sm:min-h-[100vh] sm:pb-20 sm:pt-32 lg:pb-28">
           {/* POSTER FALLBACK / INITIAL LOAD */}
           <img
             src={`${base}/images/school/school.png`}
             alt="Pallotti Hill Public School campus"
-            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-700 ${
+            className={`absolute inset-0 z-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${
               videoReady ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
             fetchPriority="high"
@@ -190,14 +190,14 @@ export function HomePage() {
             loop
             playsInline
             preload="metadata"
-            className={`absolute inset-0 -z-10 h-full w-full object-cover object-center transition-opacity duration-700 ${
+            className={`absolute inset-0 z-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${
               videoReady ? 'opacity-100' : 'opacity-0'
             }`}
           />
-          <div className="absolute inset-0 -z-[5] bg-[linear-gradient(90deg,rgba(13,43,51,.88)_0%,rgba(19,58,67,.6)_43%,rgba(19,58,67,.08)_100%)]" />
-          <div className="absolute inset-0 -z-[4] bg-[linear-gradient(0deg,rgba(10,35,42,.7)_0%,transparent_55%)]" />
+          <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(13,43,51,.88)_0%,rgba(19,58,67,.6)_43%,rgba(19,58,67,.08)_100%)] pointer-events-none" />
+          <div className="absolute inset-0 z-[2] bg-[linear-gradient(0deg,rgba(10,35,42,.7)_0%,transparent_55%)] pointer-events-none" />
 
-          <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-6 lg:px-10">
+          <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 sm:px-6 lg:px-10">
             <div className="max-w-[700px] text-white">
               <div style={{ animation: 'fadeSlideUp 800ms cubic-bezier(0.22,1,0.36,1) both' }}>
                 <p className="mb-5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f2d48e] sm:mb-6 sm:gap-3 sm:text-[11px] sm:tracking-[0.25em]">
