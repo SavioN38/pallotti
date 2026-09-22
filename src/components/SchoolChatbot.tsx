@@ -201,22 +201,22 @@ export function SchoolChatbot() {
 
   return (
     <>
-      {/* FLOATING TRIGGER BUTTON (BOTTOM RIGHT) */}
-      <div className="fixed bottom-5 left-5 sm:bottom-6 sm:left-6 z-50">
+      {/* FLOATING TRIGGER BUTTON (BOTTOM LEFT) */}
+      <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50">
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="group flex items-center gap-2.5 rounded-full border border-[#d7b76d]/40 bg-[#173c46] px-4 py-3 text-white shadow-xl shadow-[#173c46]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0d242b] hover:shadow-2xl hover:shadow-[#d7b76d]/20 active:scale-95"
+            className="group flex items-center gap-2 rounded-full border border-[#d7b76d]/40 bg-[#173c46] p-2.5 sm:px-4 sm:py-3 text-white shadow-xl shadow-[#173c46]/30 transition-all duration-300 hover:scale-105 hover:bg-[#0d242b] hover:shadow-2xl hover:shadow-[#d7b76d]/20 active:scale-95"
             aria-label="Open School Assistant"
           >
-            <div className="relative flex h-7 w-7 items-center justify-center rounded-full bg-[#d7b76d] text-[#173c46]">
-              <MessageSquare size={15} />
+            <div className="relative flex h-8 w-8 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-[#d7b76d] text-[#173c46]">
+              <MessageSquare size={16} />
               <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#86c67a] opacity-75" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#86c67a]" />
               </span>
             </div>
-            <div className="flex flex-col text-left">
+            <div className="hidden sm:flex flex-col text-left">
               <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#f2d48e]">
                 Quick Help
               </span>
