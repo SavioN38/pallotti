@@ -68,23 +68,43 @@ export function AppHeader() {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 transition-all duration-500"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
+        scrolled ? 'shadow-lg shadow-[#0d242b]/30' : ''
+      }`}
       style={{
-        background: menuOpen || scrolled ? 'rgba(23,60,70,0.97)' : 'rgba(23,60,70,0.82)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(255,255,255,0.12)',
+        background: menuOpen
+          ? 'rgba(23,60,70,0.98)'
+          : scrolled
+            ? 'rgba(16,45,53,0.94)'
+            : 'rgba(23,60,70,0.72)',
+        backdropFilter: scrolled ? 'blur(16px)' : 'blur(8px)',
+        borderBottom: scrolled
+          ? '1px solid rgba(215,183,109,0.32)'
+          : '1px solid rgba(255,255,255,0.08)',
       }}
     >
-      <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-6 lg:px-10">
+      <div
+        className={`mx-auto flex max-w-[1400px] items-center justify-between px-6 transition-all duration-500 lg:px-10 ${
+          scrolled ? 'h-[64px]' : 'h-[80px]'
+        }`}
+      >
         <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label="Pallotti Hill Public School home">
           <img
             src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/school/logo.png`}
             alt="Pallotti Hill Public School logo"
-            className="h-11 w-11 rounded-full bg-white object-contain shadow-md transition-transform duration-500 group-hover:rotate-[360deg]"
+            className={`rounded-full bg-white object-contain shadow-md transition-all duration-500 group-hover:rotate-[360deg] ${
+              scrolled ? 'h-9 w-9' : 'h-11 w-11'
+            }`}
           />
           <span className="leading-none">
-            <span className="block font-serif text-[18px] tracking-wide text-white">Pallotti Hill</span>
-            <span className="mt-1 block text-[9px] font-semibold uppercase tracking-[0.22em] text-[#d7b76d]">Public School</span>
+            <span className={`block font-serif tracking-wide text-white transition-all duration-500 ${
+              scrolled ? 'text-[16px]' : 'text-[18px]'
+            }`}>
+              Pallotti Hill
+            </span>
+            <span className="mt-0.5 block text-[8.5px] font-semibold uppercase tracking-[0.22em] text-[#d7b76d]">
+              Public School
+            </span>
           </span>
         </Link>
 

@@ -302,7 +302,7 @@ export function HomePage() {
             <div className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {campusLifeCards.map((card, index) => (
                 <Reveal key={card.title} direction="up" delay={index * 120}>
-                  <article className="group relative h-[260px] overflow-hidden rounded-sm sm:h-[320px]">
+                  <article className="group relative h-[260px] overflow-hidden rounded-md sm:h-[320px] transition-all duration-500 hover:shadow-2xl hover:shadow-[#173c46]/30 hover:-translate-y-1.5">
                     <img
                       src={card.img}
                       alt={card.alt}
@@ -310,10 +310,11 @@ export function HomePage() {
                       loading="lazy"
                       decoding="async"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#173c46]/90 via-[#173c46]/20 to-transparent transition-opacity duration-500 group-hover:from-[#173c46]/95" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#173c46]/95 via-[#173c46]/30 to-transparent transition-opacity duration-500 group-hover:from-[#173c46]" />
+                    <div className="absolute inset-0 rounded-md ring-1 ring-inset ring-white/10 group-hover:ring-[#d7b76d]/50 transition-all duration-500" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <span className="inline-block rounded-full bg-[#d7b76d] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-[#173c46]">{card.tag}</span>
-                      <h3 className="mt-3 font-serif text-xl text-white">{card.title}</h3>
+                      <span className="inline-block rounded-full bg-[#d7b76d] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-[#173c46] shadow-sm transition-transform duration-300 group-hover:scale-105">{card.tag}</span>
+                      <h3 className="mt-3 font-serif text-xl text-white transition-colors duration-300 group-hover:text-[#f2d48e]">{card.title}</h3>
                     </div>
                   </article>
                 </Reveal>
@@ -325,14 +326,14 @@ export function HomePage() {
         <section className="mx-auto max-w-[1400px] px-5 py-14 sm:px-6 sm:py-20 lg:px-10 lg:py-28">
           <div className="grid items-center gap-8 lg:grid-cols-[1.03fr_.97fr] sm:gap-12 lg:gap-24">
             <Reveal direction="right">
-              <div className="relative overflow-hidden rounded-sm">
+              <div className="relative overflow-hidden rounded-md shadow-xl transition-all duration-700 hover:shadow-2xl hover:shadow-[#173c46]/20">
                 <img
                   src={`${base}/images/school/school_no_sky.png`}
                   alt="The Pallotti Hill school building"
                   className="h-[300px] w-full object-cover object-center transition-transform duration-700 hover:scale-105 lg:h-[540px] sm:h-[400px]"
                   loading="lazy"
                 />
-                <div className="absolute bottom-4 left-4 bg-[#f6f5f0] px-4 py-3 sm:bottom-5 sm:left-5 sm:px-5 sm:py-4">
+                <div className="absolute bottom-4 left-4 rounded-sm bg-[#f6f5f0]/95 backdrop-blur-md px-4 py-3 shadow-md sm:bottom-5 sm:left-5 sm:px-5 sm:py-4 border-l-4 border-[#af8742]">
                   <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#af8742] sm:text-[10px] sm:tracking-[0.18em]">Our campus</p>
                   <p className="mt-0.5 font-serif text-[15px] text-[#173c46] sm:text-lg">A place to grow, together.</p>
                 </div>
@@ -347,11 +348,14 @@ export function HomePage() {
                 </h2>
                 <div className="mt-8 grid gap-5 sm:mt-10 sm:grid-cols-2 sm:gap-6">
                   {activities.map(({ icon: Icon, title, text }) => (
-                    <div key={title} className="group">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#173c46] text-[#f2d48e] transition-all duration-500 group-hover:scale-110 group-hover:bg-[#d7b76d] group-hover:text-[#173c46]">
+                    <div
+                      key={title}
+                      className="group rounded-xl border border-[#cad5d2]/60 bg-white/70 backdrop-blur-sm p-6 transition-all duration-400 hover:border-[#d7b76d]/70 hover:bg-white hover:shadow-xl hover:shadow-[#d7b76d]/15 hover:-translate-y-1.5"
+                    >
+                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#173c46] text-[#f2d48e] transition-all duration-500 group-hover:scale-110 group-hover:bg-[#d7b76d] group-hover:text-[#173c46] shadow-md">
                         <Icon size={20} strokeWidth={1.5} />
                       </span>
-                      <h3 className="mt-4 font-serif text-lg text-[#173c46]">{title}</h3>
+                      <h3 className="mt-4 font-serif text-lg text-[#173c46] transition-colors duration-300 group-hover:text-[#af8742]">{title}</h3>
                       <p className="mt-1.5 text-[13px] leading-5 text-[#5e757a]">{text}</p>
                     </div>
                   ))}
@@ -399,11 +403,11 @@ export function HomePage() {
           <div className="mx-auto max-w-[1250px]">
             <div className="grid items-center gap-10 lg:grid-cols-[380px_1fr] lg:gap-16">
               <Reveal direction="right">
-                <div className="relative mx-auto max-w-[340px] overflow-hidden rounded-lg border-8 border-[#173c46] shadow-2xl shadow-[#173c46]/20">
+                <div className="relative mx-auto max-w-[340px] overflow-hidden rounded-xl border-8 border-[#173c46] shadow-2xl shadow-[#173c46]/25 transition-all duration-700 hover:scale-105 hover:border-[#af8742] hover:shadow-[#d7b76d]/30">
                   <img
                     src={`${base}/images/st_vincent_pallotti.jpg`}
                     alt="St. Vincent Pallotti - Founder & Inspiration"
-                    className="h-auto w-full object-cover"
+                    className="h-auto w-full object-cover transition-transform duration-700"
                   />
                   <div className="absolute inset-0 ring-1 ring-inset ring-white/20" />
                 </div>

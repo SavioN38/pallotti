@@ -34,3 +34,29 @@
   0% { width: 0%; }
   100% { width: 100%; }
 }
+
+.gold-glow-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+
+.gold-glow-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -12px rgba(215, 183, 109, 0.28), 0 4px 12px rgba(23, 60, 70, 0.08);
+  border-color: rgba(215, 183, 109, 0.55);
+}
+
+.gold-glow-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(215, 183, 109, 0.18), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.gold-glow-card:hover::after {
+  opacity: 1;
+}
