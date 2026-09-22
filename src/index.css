@@ -60,3 +60,12 @@
 .gold-glow-card:hover::after {
   opacity: 1;
 }
+
+@keyframes shimmerPulse {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

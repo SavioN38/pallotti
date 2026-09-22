@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { HomePage } from '@/pages/HomePage';
 import { GalleryPage } from '@/pages/GalleryPage';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { SchoolChatbot } from '@/components/SchoolChatbot';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/gallery/:year" element={<GalleryPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <SchoolChatbot />
     </>
   );
 }

@@ -5,6 +5,7 @@ import { AppHeader } from '@/components/AppHeader';
 import { AppFooter } from '@/components/AppFooter';
 import { Lightbox } from '@/components/Lightbox';
 import { Reveal } from '@/components/Reveal';
+import { LazyImage } from '@/components/LazyImage';
 import {
   GALLERY_YEARS,
   buildGalleryCategories,
@@ -353,31 +354,17 @@ export function GalleryPage() {
                       return cols.map((col, colIdx) => (
                         <div key={colIdx} className="flex flex-col gap-2 sm:gap-3 lg:gap-4">
                           {col.map((photo) => (
-                            <button
+                            <LazyImage
                               key={photo.src}
+                              src={photo.src}
+                              alt={`${photo.category} photo`}
+                              aspectRatio="aspect-[4/3]"
+                              globalIndex={photo.globalIndex}
                               onClick={() => {
                                 setLightboxAutoStart(false);
                                 setLightboxIndex(photo.globalIndex);
                               }}
-                              className="group relative block aspect-[4/3] w-full overflow-hidden rounded-sm bg-[#173c46]/10"
-                            >
-                              <img
-                                src={photo.src}
-                                alt={`${photo.category} photo`}
-                                width={800}
-                                height={600}
-                                loading="lazy"
-                                decoding="async"
-                                className="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.04]"
-                              />
-                              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d242b]/60 via-transparent to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
-                              <div className="pointer-events-none absolute bottom-3 left-3 right-3 flex items-center justify-between text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 translate-y-2">
-                                <span className="rounded-full bg-black/50 px-2 py-0.5 text-[8px] font-bold uppercase tracking-[0.12em] backdrop-blur sm:px-2.5 sm:py-1 sm:text-[9px] sm:tracking-[0.14em]">
-                                  #{photo.globalIndex + 1}
-                                </span>
-                                <Images size={11} className="drop-shadow sm:size-[13px]" />
-                              </div>
-                            </button>
+                            />
                           ))}
                         </div>
                       ));
