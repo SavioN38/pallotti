@@ -54,26 +54,25 @@ export function LazyImage({
     >
       {/* SKELETON SHIMMER PLACEHOLDER */}
       <div
-        className={`absolute inset-0 bg-gradient-to-r from-[#173c46]/10 via-[#d7b76d]/15 to-[#173c46]/10 bg-[length:200%_100%] transition-opacity duration-700 ${
+        className={`absolute inset-0 bg-gradient-to-r from-[#173c46]/10 via-[#d7b76d]/15 to-[#173c46]/10 bg-[length:200%_100%] transition-opacity duration-300 ${
           isLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100 animate-pulse'
         }`}
         style={{
-          animation: isLoaded ? 'none' : 'shimmerPulse 1.8s ease-in-out infinite',
+          animation: isLoaded ? 'none' : 'shimmerPulse 1.2s ease-in-out infinite',
         }}
       />
 
-      {/* REAL IMAGE (LOADED ONCE IN VIEW) */}
-      {isInView && (
-        <img
-          src={src}
-          alt={alt}
-          onLoad={() => setIsLoaded(true)}
-          decoding="async"
-          className={`h-full w-full object-cover transition-all duration-700 ease-out will-change-transform group-hover:scale-[1.04] ${
-            isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-          }`}
-        />
-      )}
+      {/* REAL IMAGE WITH NATIVE HIGH PERFORMANCE BROWSER LAZY LOADING */}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setIsLoaded(true)}
+        className={`h-full w-full object-cover transition-all duration-300 ease-out will-change-transform group-hover:scale-[1.04] ${
+          isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
+        }`}
+      />
 
       {/* AMBIENT HOVER GRADIENT & OVERLAY */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d242b]/70 via-transparent to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
