@@ -72,7 +72,7 @@ export function AppFooter() {
         </div>
       </div>
       <div className="mt-14 flex flex-col justify-between gap-3 border-t border-[#cad5d2] pt-5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#8da0a0] sm:flex-row">
-        <span>© 2025 Pallotti Hill Public School</span>
+        <span>© 2026 SavioN38</span>
         <span>Learning with purpose</span>
       </div>
     </section>
