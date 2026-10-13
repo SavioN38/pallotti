@@ -64,6 +64,20 @@ Whenever modifying or extending this codebase, adhere strictly to these rules:
 
 ## 3. Changelog & Session History
 
+### Entry 2026-10-13 (Gallery Hero Festive Seasonal Reskinning)
+- **Author/Agent**: Antigravity Assistant & SavioN38
+- **Summary**: Reskinned the Gallery Page hero header (`/gallery/:year`) to dynamically adapt to Christmas mode:
+  - Replaced hardcoded teal linear gradient with dynamic Royal Burgundy & Wine gradient overlays (`rgba(56, 11, 19, 0.90)` to `rgba(40, 8, 14, 0.96)`).
+  - Added gentle falling snow (`<Snowfall />`) in the Gallery hero section when festive theme is active.
+- **Files Modified**:
+  - [`src/pages/GalleryPage.tsx`](file:///c:/SavioN/Pallotti_Hill_Public_School_Website/src/pages/GalleryPage.tsx)
+- **Verification**:
+  - `npm run lint`: Passed with 0 errors.
+  - `npm run typecheck`: Passed with 0 errors.
+  - `npm run build`: Passed cleanly in 7.88s.
+
+---
+
 ### Entry 2026-10-13 (Automatic Date Scheduling for Christmas Theme)
 - **Author/Agent**: Antigravity Assistant & SavioN38
 - **Summary**: Implemented automatic calendar date scheduling for the seasonal theme:

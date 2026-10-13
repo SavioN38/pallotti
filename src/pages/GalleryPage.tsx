@@ -6,6 +6,8 @@ import { AppFooter } from '@/components/AppFooter';
 import { Lightbox } from '@/components/Lightbox';
 import { Reveal } from '@/components/Reveal';
 import { LazyImage } from '@/components/LazyImage';
+import { Snowfall } from '@/components/Snowfall';
+import { useTheme } from '@/hooks/useTheme';
 import {
   GALLERY_YEARS,
   buildGalleryCategories,
@@ -24,6 +26,7 @@ function splitIntoColumns<T>(items: T[], cols: number): T[][] {
 export function GalleryPage() {
   const { year } = useParams<{ year: string }>();
   const navigate = useNavigate();
+  const { isChristmas } = useTheme();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [lightboxAutoStart, setLightboxAutoStart] = useState(false);
   const [showTop, setShowTop] = useState(false);
@@ -115,15 +118,35 @@ export function GalleryPage() {
       <AppHeader />
 
       {/* HERO */}
-      <section className="relative isolate flex min-h-[78vh] items-end overflow-hidden bg-[#0d242b] pb-20 pt-28 sm:min-h-[82vh] sm:pb-24 sm:pt-36 lg:pb-32">
+      <section
+        className={`relative isolate flex min-h-[78vh] items-end overflow-hidden pb-20 pt-28 sm:min-h-[82vh] sm:pb-24 sm:pt-36 lg:pb-32 transition-colors duration-500 ${
+          isChristmas ? 'bg-[#380b13]' : 'bg-[#0d242b]'
+        }`}
+      >
         <img
           src={categories[0]?.cover || '/images/school/school.png'}
           alt=""
           className="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
           style={{ animation: 'kenBurns 28s ease-in-out infinite alternate' }}
         />
-        <div className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(13,36,43,.85)_0%,rgba(13,36,43,.65)_45%,rgba(13,36,43,.95)_100%)]" />
-        <div className="absolute inset-0 -z-[4] bg-[radial-gradient(circle_at_80%_20%,rgba(215,183,109,.15),transparent_55%)]" />
+        <div
+          className="absolute inset-0 -z-[5] transition-all duration-500"
+          style={{
+            background: isChristmas
+              ? 'linear-gradient(180deg, rgba(56, 11, 19, 0.90) 0%, rgba(75, 16, 26, 0.65) 45%, rgba(40, 8, 14, 0.96) 100%)'
+              : 'linear-gradient(180deg, rgba(13, 36, 43, 0.85) 0%, rgba(13, 36, 43, 0.65) 45%, rgba(13, 36, 43, 0.95) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 -z-[4] transition-all duration-500"
+          style={{
+            background: isChristmas
+              ? 'radial-gradient(circle at 80% 20%, rgba(215, 183, 109, 0.22), transparent 55%)'
+              : 'radial-gradient(circle at 80% 20%, rgba(215, 183, 109, 0.15), transparent 55%)',
+          }}
+        />
+
+        {isChristmas && <Snowfall />}
 
         <div className="mx-auto w-full max-w-[1400px] px-6 lg:px-10">
           <div style={{ animation: 'fadeSlideUp 700ms cubic-bezier(0.22,1,0.36,1) both' }}>
