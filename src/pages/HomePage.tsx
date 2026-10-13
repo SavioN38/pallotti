@@ -4,18 +4,12 @@ import {
   CircleArrowOutUpRight,
   BookOpen,
   CalendarDays,
-  ChevronDown,
-  Heart,
   Lightbulb,
-  MapPin,
-  MoveUpRight,
   Music,
   Palette,
-  Phone,
   Sparkles,
   Trophy,
   Users,
-  ArrowUpRight,
 } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { StatCounter } from '@/components/StatCounter';

@@ -3,19 +3,9 @@ import {
   MessageSquare,
   X,
   Send,
-  Sparkles,
   Bot,
   User,
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  GraduationCap,
-  Bus,
-  CreditCard,
   ExternalLink,
-  ChevronRight,
-  HelpCircle,
 } from 'lucide-react';
 
 interface Message {

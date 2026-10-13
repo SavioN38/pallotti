@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Images } from 'lucide-react';
 
 interface LazyImageProps {
@@ -18,37 +18,11 @@ export function LazyImage({
   aspectRatio = 'aspect-[4/3]',
   globalIndex,
   onClick,
-  rootMargin = '250px 0px',
 }: LazyImageProps) {
-  const [isInView, setIsInView] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    // Use Intersection Observer with generous rootMargin (loads 250px before entering viewport)
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsInView(true);
-            observer.disconnect();
-          }
-        },
-        { rootMargin }
-      );
-      observer.observe(el);
-      return () => observer.disconnect();
-    } else {
-      setIsInView(true);
-    }
-  }, [rootMargin]);
 
   return (
     <div
-      ref={containerRef}
       onClick={onClick}
       className={`group relative overflow-hidden rounded-sm bg-[#173c46]/10 cursor-pointer ${aspectRatio} ${className}`}
     >
