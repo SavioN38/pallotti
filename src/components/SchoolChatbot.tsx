@@ -7,6 +7,7 @@ import {
   User,
   ExternalLink,
 } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 interface Message {
   id: string;
@@ -84,6 +85,15 @@ const KNOWLEDGE_BASE: KnowledgeItem[] = [
     response: `**Management & Legacy:**\n\n• **Management:** Pallotti Hill Public School is founded and managed by the **Malabar Marian Trust** of the Pallottine Fathers.\n• Inspired by **St. Vincent Pallotti**, our motto is to nurture disciplined, compassionate, and intellectually enlightened global citizens.`,
   },
   {
+    keywords: ['christmas', 'xmas', 'holiday', 'holidays', 'vacation', 'carol', 'carols', 'december'],
+    response: `🎄 **Christmas Celebrations & Holidays:**\n\n• **Annual Carol Service:** Celebrated with music, pageantry, and choir performances before the winter break.\n• **Winter Vacation:** School remains closed for the Christmas holidays as per the CBSE & state academic calendar.\n• **Office Inquiries:** The administrative desk can be reached via phone for any urgent academic or admission inquiries.\n• Wishing all our students, parents, and alumni a blessed Christmas and a peaceful New Year!`,
+    actionLink: {
+      label: 'Call Office: 0495 229 66 77',
+      href: 'tel:04952296677',
+      isExternal: true,
+    },
+  },
+  {
     keywords: ['hi', 'hello', 'hey', 'greetings', 'morning', 'afternoon', 'evening', 'help'],
     response: `Hello! 👋 Welcome to Pallotti Hill Public School Assistant. How can I help you today? You can ask me about admissions, fees, timings, syllabus, transport, or contact details!`,
   },
@@ -93,6 +103,7 @@ const QUICK_PROMPTS = [
   'Admission procedure?',
   'Fee structure details?',
   'School & office timings?',
+  'Christmas holidays & carols?',
   'Bus / transport routes?',
   'How to contact the school?',
   'Facilities & campus?',
@@ -137,14 +148,15 @@ function getBotAnswer(query: string): { response: string; actionLink?: Knowledge
 }
 
 export function SchoolChatbot() {
+  const { themeConfig, isChristmas } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       sender: 'bot',
-      text: `Hello! 👋 Welcome to **Pallotti Hill Public School**. How can I assist you today?`,
-      chips: QUICK_PROMPTS.slice(0, 4),
+      text: themeConfig.chatbotGreeting,
+      chips: isChristmas ? QUICK_PROMPTS.slice(0, 4) : QUICK_PROMPTS.filter(p => !p.includes('Christmas')).slice(0, 4),
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);

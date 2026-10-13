@@ -1,17 +1,26 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Globe, Heart, Mail, MapPin, Phone, Smartphone } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
+import { SantaHat } from '@/components/SantaHat';
 
 export function AppFooter() {
+  const { isChristmas } = useTheme();
+
   return (
     <section id="contact" className="mx-auto max-w-[1400px] px-6 py-16 lg:px-10">
       <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2">
           <Link to="/" className="group flex items-center gap-3">
-            <img
-              src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/school/logo.png`}
-              alt="Pallotti Hill Public School logo"
-              className="h-10 w-10 rounded-full bg-white object-contain shadow-md transition-transform duration-500 group-hover:rotate-[360deg]"
-            />
+            <div className="relative shrink-0">
+              <img
+                src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/school/logo.png`}
+                alt="Pallotti Hill Public School logo"
+                className="h-10 w-10 rounded-full bg-white object-contain shadow-md transition-transform duration-500 group-hover:rotate-[360deg]"
+              />
+              {isChristmas && (
+                <SantaHat className="absolute -top-3.5 left-5 w-[36px] h-[30px] rotate-[33deg] pointer-events-none transition-transform duration-300 ease-out group-hover:-translate-y-2" />
+              )}
+            </div>
             <span className="font-serif text-xl text-[#173c46]">Pallotti Hill</span>
           </Link>
           <p className="mt-5 max-w-[300px] text-sm leading-6 text-[#5e757a]">

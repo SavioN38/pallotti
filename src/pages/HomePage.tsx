@@ -15,6 +15,8 @@ import { Reveal } from '@/components/Reveal';
 import { StatCounter } from '@/components/StatCounter';
 import { AppHeader } from '@/components/AppHeader';
 import { AppFooter } from '@/components/AppFooter';
+import { Snowfall } from '@/components/Snowfall';
+import { useTheme } from '@/hooks/useTheme';
 
 const highlights = [
   {
@@ -87,6 +89,13 @@ const events = [
   { date: '20', month: 'JUL', title: 'Annual art exhibition', type: 'Arts' },
 ];
 
+const christmasEvents = [
+  { date: '20', month: 'DEC', title: 'Annual School EXPO 2k26', type: 'School Calendar' },
+  { date: '23', month: 'DEC', title: 'Christmas Holidays & Winter Break Begins', type: 'School Calendar' },
+  { date: '05', month: 'JAN', title: 'School Reopens for Term 2', type: 'School Calendar' },
+  { date: '26', month: 'JAN', title: 'Republic Day Celebrations & Assembly', type: 'School Event' },
+];
+
 const testimonials = [
   {
     quote: "Being a Pallottine is that which helps me grow into the person I'm. I have great memories, good and bad, a lot of learning experiences and some that I'll take with me the rest of my life. I'm forever grateful to this institution for laying a strong foundation in me to build my career and life upon.",
@@ -111,6 +120,29 @@ export function HomePage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const { isChristmas, themeConfig } = useTheme();
+  const currentEvents = isChristmas ? christmasEvents : events;
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const hero = heroSectionRef.current;
+    if (!video || !hero) return;
+
+    // Pause heavy 53MB hero video when scrolled away to eliminate GPU/CPU strain
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => { });
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -127,7 +159,7 @@ export function HomePage() {
       } catch {
         // ignore if not ready
       }
-      video.play().catch(() => {});
+      video.play().catch(() => { });
     };
 
     const showVideo = () => {
@@ -164,14 +196,13 @@ export function HomePage() {
       <AppHeader />
 
       <main id="top">
-        <section className="relative isolate flex min-h-[88vh] items-end overflow-hidden pb-16 pt-28 sm:min-h-[100vh] sm:pb-20 sm:pt-32 lg:pb-28">
+        <section ref={heroSectionRef} className="relative isolate flex min-h-[88vh] items-end overflow-hidden pb-16 pt-28 sm:min-h-[100vh] sm:pb-20 sm:pt-32 lg:pb-28">
           {/* POSTER FALLBACK / INITIAL LOAD */}
           <img
             src={`${base}/images/school/school.png`}
             alt="Pallotti Hill Public School campus"
-            className={`absolute inset-0 z-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${
-              videoReady ? 'opacity-0 pointer-events-none' : 'opacity-100'
-            }`}
+            className={`absolute inset-0 z-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${videoReady ? 'opacity-0 pointer-events-none' : 'opacity-100'
+              }`}
             fetchPriority="high"
           />
 
@@ -184,19 +215,44 @@ export function HomePage() {
             loop
             playsInline
             preload="metadata"
-            className={`absolute inset-0 z-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${
-              videoReady ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 z-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${videoReady ? 'opacity-100' : 'opacity-0'
+              }`}
           />
-          <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(13,43,51,.88)_0%,rgba(19,58,67,.6)_43%,rgba(19,58,67,.08)_100%)] pointer-events-none" />
-          <div className="absolute inset-0 z-[2] bg-[linear-gradient(0deg,rgba(10,35,42,.7)_0%,transparent_55%)] pointer-events-none" />
+
+          {/* GENTLE FESTIVE SNOWFALL */}
+          <Snowfall />
+
+          {/* DYNAMIC HERO GRADIENT SCRIMS */}
+          <div
+            className="absolute inset-0 z-[1] pointer-events-none transition-colors duration-700"
+            style={{
+              background:
+                'linear-gradient(90deg, var(--theme-hero-scrim-left) 0%, var(--theme-hero-scrim-mid) 43%, var(--theme-hero-scrim-right) 100%)',
+            }}
+          />
+          <div
+            className="absolute inset-0 z-[2] pointer-events-none transition-colors duration-700"
+            style={{
+              background:
+                'linear-gradient(0deg, var(--theme-hero-scrim-bottom) 0%, transparent 55%)',
+            }}
+          />
 
           <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 sm:px-6 lg:px-10">
             <div className="max-w-[700px] text-white">
               <div style={{ animation: 'fadeSlideUp 800ms cubic-bezier(0.22,1,0.36,1) both' }}>
-                <p className="mb-5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f2d48e] sm:mb-6 sm:gap-3 sm:text-[11px] sm:tracking-[0.25em]">
-                  <span className="h-px w-6 bg-[#f2d48e] sm:w-8" />Growing minds. Good hearts.
-                </p>
+                {isChristmas ? (
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#f2d48e]/50 bg-[#380b13]/85 backdrop-blur-md px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#f2d48e] shadow-lg sm:mb-6 sm:px-4 sm:text-[11.5px]">
+                    <span className="text-sm">🎄</span>
+                    <span>{themeConfig.banner.greeting}</span>
+                    <span className="hidden sm:inline text-white/40">•</span>
+                    <span className="hidden sm:inline text-white/85 font-normal tracking-wide normal-case text-[11px]">{themeConfig.banner.badge}</span>
+                  </div>
+                ) : (
+                  <p className="mb-5 flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f2d48e] sm:mb-6 sm:gap-3 sm:text-[11px] sm:tracking-[0.25em]">
+                    <span className="h-px w-6 bg-[#f2d48e] sm:w-8" />Growing minds. Good hearts.
+                  </p>
+                )}
               </div>
               <h1
                 className="font-serif text-[40px] leading-[.98] tracking-[-0.035em] sm:text-[54px] lg:text-[72px] xl:text-[92px]"
@@ -373,7 +429,7 @@ export function HomePage() {
           </Reveal>
 
           <div className="divide-y divide-[#cad5d2]">
-            {events.map((event, index) => (
+            {currentEvents.map((event, index) => (
               <Reveal key={event.title} direction="left" delay={index * 80}>
                 <a href="#contact" className="group grid items-center gap-4 py-5 transition-transform duration-300 hover:translate-x-2 sm:gap-5 sm:py-6 md:grid-cols-[110px_1fr_auto] md:gap-10">
                   <div className="flex items-center gap-3 text-[#af8742]">

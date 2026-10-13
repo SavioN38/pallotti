@@ -2,11 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --theme-primary: #173c46;
+  --theme-primary-dark: #0d242b;
+  --theme-primary-mid: #102d35;
+  --theme-accent-gold: #d7b76d;
+  --theme-accent-light: #f2d48e;
+  --theme-accent-ochre: #af8742;
+  --theme-muted: #426069;
+  --theme-border: #cad5d2;
+  --theme-bg-body: #f6f5f0;
+  --theme-header-bg: rgba(23, 60, 70, 0.72);
+  --theme-header-bg-scrolled: rgba(16, 45, 53, 0.94);
+  --theme-header-bg-menu: rgba(23, 60, 70, 0.98);
+  --theme-hero-scrim-left: rgba(13, 43, 51, 0.88);
+  --theme-hero-scrim-mid: rgba(19, 58, 67, 0.6);
+  --theme-hero-scrim-right: rgba(19, 58, 67, 0.08);
+  --theme-hero-scrim-bottom: rgba(10, 35, 42, 0.7);
+}
+
+[data-theme="christmas"], .theme-christmas {
+  --theme-primary: #54141e; /* Deep Royal Burgundy */
+  --theme-primary-dark: #380b13; /* Rich Dark Wine Velvet */
+  --theme-primary-mid: #420f18; /* Deep Wine */
+  --theme-accent-gold: #d7b76d; /* Champagne Gold */
+  --theme-accent-light: #f2d48e; /* Warm Shimmer Gold */
+  --theme-accent-ochre: #c9923b; /* Festive Warm Ochre */
+  --theme-muted: #6b3e45; /* Warm Burgundy Slate */
+  --theme-border: #dcc8ca; /* Soft Rosy Linen Border */
+  --theme-bg-body: #faf7f5; /* Warm Festive Canvas */
+  --theme-header-bg: rgba(75, 16, 26, 0.76);
+  --theme-header-bg-scrolled: rgba(56, 11, 19, 0.95);
+  --theme-header-bg-menu: rgba(75, 16, 26, 0.98);
+  --theme-hero-scrim-left: rgba(45, 9, 16, 0.92);
+  --theme-hero-scrim-mid: rgba(75, 16, 26, 0.68);
+  --theme-hero-scrim-right: rgba(75, 16, 26, 0.12);
+  --theme-hero-scrim-bottom: rgba(35, 7, 12, 0.75);
+}
+
 @layer base {
   html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  body {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
   h1, h2, h3, .font-serif { font-family: Georgia, "Times New Roman", serif; }
   ::selection { background: #d7b76d; color: #173c46; }
+}
+
+[data-theme="christmas"] ::selection {
+  background: #d7b76d;
+  color: #54141e;
 }
 
 @layer components {
@@ -68,4 +114,91 @@
   100% {
     background-position: 200% 0;
   }
+}
+
+/* ==========================================================================
+   CHRISTMAS / HOLIDAY THEME OVERRIDES
+   When [data-theme="christmas"] is present, cleanly reskin primary brand hues
+   to Royal Burgundy & Champagne Gold across all sections.
+   ========================================================================== */
+[data-theme="christmas"] .bg-\[\#173c46\] {
+  background-color: var(--theme-primary) !important;
+}
+[data-theme="christmas"] .text-\[\#173c46\] {
+  color: var(--theme-primary) !important;
+}
+[data-theme="christmas"] .border-\[\#173c46\] {
+  border-color: var(--theme-primary) !important;
+}
+[data-theme="christmas"] .hover\:bg-\[\#173c46\]:hover {
+  background-color: var(--theme-primary) !important;
+}
+[data-theme="christmas"] .hover\:text-\[\#173c46\]:hover {
+  color: var(--theme-primary) !important;
+}
+[data-theme="christmas"] .hover\:border-\[\#173c46\]:hover {
+  border-color: var(--theme-primary) !important;
+}
+
+[data-theme="christmas"] .bg-\[\#0d242b\],
+[data-theme="christmas"] .bg-\[\#0d2228\],
+[data-theme="christmas"] .bg-\[\#102d35\] {
+  background-color: var(--theme-primary-dark) !important;
+}
+[data-theme="christmas"] .text-\[\#0d242b\] {
+  color: var(--theme-primary-dark) !important;
+}
+[data-theme="christmas"] .border-\[\#0d242b\] {
+  border-color: var(--theme-primary-dark) !important;
+}
+[data-theme="christmas"] .hover\:bg-\[\#0d242b\]:hover {
+  background-color: var(--theme-primary-dark) !important;
+}
+
+[data-theme="christmas"] .from-\[\#173c46\] {
+  --tw-gradient-from: var(--theme-primary) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(84 20 30 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+[data-theme="christmas"] .from-\[\#173c46\]\/95 {
+  --tw-gradient-from: rgb(84 20 30 / 0.95) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(84 20 30 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+[data-theme="christmas"] .from-\[\#173c46\]\/90 {
+  --tw-gradient-from: rgb(84 20 30 / 0.90) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(84 20 30 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+[data-theme="christmas"] .via-\[\#173c46\] {
+  --tw-gradient-to: rgb(84 20 30 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #54141e var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+[data-theme="christmas"] .via-\[\#173c46\]\/90 {
+  --tw-gradient-to: rgb(84 20 30 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(84 20 30 / 0.90) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+[data-theme="christmas"] .via-\[\#173c46\]\/30 {
+  --tw-gradient-to: rgb(84 20 30 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(84 20 30 / 0.30) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+[data-theme="christmas"] .to-\[\#173c46\] {
+  --tw-gradient-to: var(--theme-primary) var(--tw-gradient-to-position) !important;
+}
+[data-theme="christmas"] .to-\[\#173c46\]\/60 {
+  --tw-gradient-to: rgb(84 20 30 / 0.60) var(--tw-gradient-to-position) !important;
+}
+
+[data-theme="christmas"] .footer-heading {
+  color: var(--theme-primary) !important;
+}
+
+[data-theme="christmas"] .bg-\[\#f6f5f0\] {
+  background-color: var(--theme-bg-body) !important;
+}
+[data-theme="christmas"] .bg-\[\#e4ebe8\] {
+  background-color: #f3eae6 !important;
+}
+[data-theme="christmas"] .border-\[\#cad5d2\] {
+  border-color: var(--theme-border) !important;
 }

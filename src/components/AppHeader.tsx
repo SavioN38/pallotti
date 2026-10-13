@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ChevronDown, MoveUpRight, Menu, X, Images } from 'lucide-react';
 import { GALLERY_YEARS } from '@/data/gallery';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import { SantaHat } from '@/components/SantaHat';
+import { useTheme } from '@/hooks/useTheme';
 
 const navItems = [
   { label: 'About us', href: '#about-us', route: '/' },
@@ -11,6 +14,7 @@ const navItems = [
 ];
 
 export function AppHeader() {
+  const { isChristmas } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [galleryHover, setGalleryHover] = useState(false);
   const [galleryLocked, setGalleryLocked] = useState(false);
@@ -22,9 +26,18 @@ export function AppHeader() {
   const galleryOpen = galleryLocked || galleryHover;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     onScroll();
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -68,15 +81,14 @@ export function AppHeader() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
-        scrolled ? 'shadow-lg shadow-[#0d242b]/30' : ''
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out will-change-transform [transform:translateZ(0)] ${scrolled ? 'shadow-lg shadow-black/25' : ''
+        }`}
       style={{
         background: menuOpen
-          ? 'rgba(23,60,70,0.98)'
+          ? 'var(--theme-header-bg-menu)'
           : scrolled
-            ? 'rgba(16,45,53,0.94)'
-            : 'rgba(23,60,70,0.72)',
+            ? 'var(--theme-header-bg-scrolled)'
+            : 'var(--theme-header-bg)',
         backdropFilter: scrolled ? 'blur(16px)' : 'blur(8px)',
         borderBottom: scrolled
           ? '1px solid rgba(215,183,109,0.32)'
@@ -84,22 +96,29 @@ export function AppHeader() {
       }}
     >
       <div
-        className={`mx-auto flex max-w-[1400px] items-center justify-between px-6 transition-all duration-500 lg:px-10 ${
-          scrolled ? 'h-[64px]' : 'h-[80px]'
-        }`}
+        className={`mx-auto flex max-w-[1400px] items-center justify-between px-6 transition-all duration-500 lg:px-10 ${scrolled ? 'h-[64px]' : 'h-[80px]'
+          }`}
       >
         <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label="Pallotti Hill Public School home">
-          <img
-            src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/school/logo.png`}
-            alt="Pallotti Hill Public School logo"
-            className={`rounded-full bg-white object-contain shadow-md transition-all duration-500 group-hover:rotate-[360deg] ${
-              scrolled ? 'h-9 w-9' : 'h-11 w-11'
-            }`}
-          />
+          <div className="relative shrink-0">
+            <img
+              src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/images/school/logo.png`}
+              alt="Pallotti Hill Public School logo"
+              className={`rounded-full bg-white object-contain shadow-md transition-all duration-500 group-hover:rotate-[360deg] ${scrolled ? 'h-9 w-9' : 'h-11 w-11'
+                }`}
+            />
+            {isChristmas && (
+              <SantaHat
+                className={`absolute pointer-events-none transition-transform duration-300 ease-out group-hover:-translate-y-0.5 ${scrolled
+                  ? '-top-3 left-5 w-[32px] h-[28px] rotate-[30deg]'
+                  : '-top-4 left-5 w-[38px] h-[32px] rotate-[30deg]'
+                  }`}
+              />
+            )}
+          </div>
           <span className="leading-none">
-            <span className={`block font-serif tracking-wide text-white transition-all duration-500 ${
-              scrolled ? 'text-[16px]' : 'text-[18px]'
-            }`}>
+            <span className={`block font-serif tracking-wide text-white transition-all duration-500 ${scrolled ? 'text-[16px]' : 'text-[18px]'
+              }`}>
               Pallotti Hill
             </span>
             <span className="mt-0.5 block text-[8.5px] font-semibold uppercase tracking-[0.22em] text-[#d7b76d]">
@@ -115,8 +134,7 @@ export function AppHeader() {
               to={item.route + item.href}
               onClick={() => handleNavClick(item.href)}
               className={({ isActive }) =>
-                `group relative flex items-center gap-1 text-[13px] font-medium transition-colors ${
-                  isActive && location.hash === item.href ? 'text-white' : 'text-white/80 hover:text-white'
+                `group relative flex items-center gap-1 text-[13px] font-medium transition-colors ${isActive && location.hash === item.href ? 'text-white' : 'text-white/80 hover:text-white'
                 }`
               }
             >
@@ -139,12 +157,11 @@ export function AppHeader() {
               to="/gallery/2025-26"
               onClick={handleGalleryBtnClick}
               className={({ isActive }) =>
-                `group flex items-center gap-1 text-[13px] font-medium transition-colors ${
-                  isActive || location.pathname.startsWith('/gallery')
-                    ? galleryLocked ? 'text-[#f2d48e]' : 'text-white'
-                    : galleryLocked
-                      ? 'text-[#f2d48e]'
-                      : 'text-white/80 hover:text-white'
+                `group flex items-center gap-1 text-[13px] font-medium transition-colors ${isActive || location.pathname.startsWith('/gallery')
+                  ? galleryLocked ? 'text-[#f2d48e]' : 'text-white'
+                  : galleryLocked
+                    ? 'text-[#f2d48e]'
+                    : 'text-white/80 hover:text-white'
                 }`
               }
               aria-haspopup="true"
@@ -180,10 +197,9 @@ export function AppHeader() {
                       to={`/gallery/${y.slug}`}
                       onClick={() => setGalleryLocked(false)}
                       className={({ isActive }) =>
-                        `group flex items-center justify-between rounded-md px-3 py-2.5 text-[13px] transition-colors ${
-                          isActive
-                            ? 'bg-[#d7b76d]/20 text-[#f2d48e] font-semibold'
-                            : 'text-white hover:bg-white/10'
+                        `group flex items-center justify-between rounded-md px-3 py-2.5 text-[13px] transition-colors ${isActive
+                          ? 'bg-[#d7b76d]/20 text-[#f2d48e] font-semibold'
+                          : 'text-white hover:bg-white/10'
                         }`
                       }
                       role="menuitem"
@@ -218,7 +234,8 @@ export function AppHeader() {
           </div>
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex">
+          <ThemeSwitcher />
           <Link to="/#contact" className="text-[13px] font-medium text-white/75 transition-colors hover:text-white">Contact</Link>
           <Link
             to="/#admissions"
@@ -229,14 +246,17 @@ export function AppHeader() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          className="rounded-full border border-white/25 p-2 text-white transition-colors hover:bg-white/10 lg:hidden"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeSwitcher />
+          <button
+            type="button"
+            className="rounded-full border border-white/25 p-2 text-white transition-colors hover:bg-white/10"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       <div
