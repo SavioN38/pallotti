@@ -32,23 +32,12 @@ export interface SeasonalThemeConfig {
  */
 export function getAutoScheduledSeason(): SeasonMode {
   const today = new Date();
-  const year = today.getFullYear();
   const month = today.getMonth() + 1; // 1-12
   const day = today.getDate();
 
-  // 🧪 TEST SCHEDULE:
-  // Today (Oct 13, 2026): 'default' (Normal)
-  // Tomorrow (Oct 14, 2026) through Oct 31: 'christmas' (Automated test)
-  if (year === 2026 && month === 10) {
-    if (day >= 14) {
-      return 'christmas';
-    }
-    return 'default';
-  }
-
-  // 🎄 ANNUAL REAL CHRISTMAS SEASON:
-  // Automatically turns on from December 1 through January 10
-  if (month === 12 || (month === 1 && day <= 10)) {
+  // 🎄 CHRISTMAS FESTIVE MODE SCHEDULE:
+  // Active annually from November 30 (end of Nov) through December 26
+  if ((month === 11 && day >= 30) || (month === 12 && day <= 26)) {
     return 'christmas';
   }
 

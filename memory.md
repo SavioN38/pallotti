@@ -64,6 +64,17 @@ Whenever modifying or extending this codebase, adhere strictly to these rules:
 
 ## 3. Changelog & Session History
 
+### Entry 2026-10-14 (Annual Christmas Schedule Set: Nov 30 - Dec 26)
+- **Author/Agent**: Antigravity Assistant & SavioN38
+- **Summary**: Finalized the automated seasonal Christmas schedule in [`src/config/themeConfig.ts`](file:///c:/SavioN/Pallotti_Hill_Public_School_Website/src/config/themeConfig.ts) to automatically activate from November 30 (end of Nov) through December 26 each year.
+- **Files Modified**:
+  - [`src/config/themeConfig.ts`](file:///c:/SavioN/Pallotti_Hill_Public_School_Website/src/config/themeConfig.ts)
+- **Verification**:
+  - `npm run lint`: Passed with 0 errors.
+  - `npm run typecheck`: Passed with 0 errors.
+
+---
+
 ### Entry 2026-10-13 (Gallery Hero Festive Seasonal Reskinning)
 - **Author/Agent**: Antigravity Assistant & SavioN38
 - **Summary**: Reskinned the Gallery Page hero header (`/gallery/:year`) to dynamically adapt to Christmas mode:
